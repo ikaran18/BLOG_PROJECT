@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% block title %} {{blog.title}} | Blog Project{% endblock title %}
+
+{% block content %}
+
+
+
+<div class="container mt-5">
+
+    <h1>{{blog.title}}</h1>
+    By - {{blog.author}} -- {{blog.created_at}}
+    <br>
+    <hr>
+    {{blog.content | safe}}
+
+    <br><br><br>
+    <hr>
+    <h2>Comments </h2>
+    {% if not blog.comments.all %}
+        <Strong>No Comment Yet...</Strong><a href="{% url 'addcomment' blog.pk %}">Add One</a>
+        {% else %}
+        <a href="{% url 'addcomment' blog.pk %}">Add Comment</a><br>
+        {% for comment in post.comment.all %}
+                <strong>
+                    {{comment.name}}
+                    {{comment.date_added}}
+                </strong>
+                {{comment.body}}
+                {% endfor%}
+            {% endif %}
+            <br>
+            <hr>
+
+
+
+
+    <a href="{% url 'home'%}" class='btn btn-primary btn-sm'>Back to home</a>
+</div>
+{% endblock content %}
