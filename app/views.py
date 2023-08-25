@@ -1,7 +1,7 @@
-# from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from .models import Blog,Comment
 from .forms import BlogForm,CommentForm
@@ -43,7 +43,8 @@ class AddComment(CreateView):
     form_class = CommentForm
     template_name = "index/commentsection.html"
     success_url = reverse_lazy("home")
+    # fields = "__all__"
     
     def form_valid(self,form):
-        form.instance.blog.id = self.kwargs[id]
+        form.instance.blogpost_id = self.kwargs['pk']
         return super().form_valid(form)
